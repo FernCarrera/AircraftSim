@@ -1,0 +1,16 @@
+# from Daniel Raymer's Aircraft Design: A Conceptual Approach
+
+CL - Wing or whole airplane lift coefficient
+
+C_bleed - bleed coefficient (adjust thrust for amount of bleed air)
+
+CD - Wing or whole airplane drag coefficient
+
+CDi - Induced drag coefficient
+
+CD_min - minimum drag coefficient (=Cd0 if uncambered)
+
+CD_wave - supersonic wave-drag coefficient (also CDw)
+
+Cd0 - drag coefficient at zero lift
+
