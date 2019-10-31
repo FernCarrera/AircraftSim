@@ -1,6 +1,5 @@
 # from Daniel Raymer's Aircraft Design: A Conceptual Approach
 
-CL - Wing or whole airplane lift coefficient
 
 C_bleed - bleed coefficient (adjust thrust for amount of bleed air)
 
@@ -13,4 +12,41 @@ CD_min - minimum drag coefficient (=Cd0 if uncambered)
 CD_wave - supersonic wave-drag coefficient (also CDw)
 
 Cd0 - drag coefficient at zero lift
+
+Cd - Airfoil drag coefficient
+
+Cf - flat-plate skin-friction coefficient
+
+Cfe - equivalent skin-friction coefficient
+
+C_HT - Horizontal tail volume coefficient
+
+CL - Wing or whole airplane lift coefficient
+
+Cl - Airfoil lift coefficient
+
+Cl - Rolling-moment coefficient
+
+CLa - Wing or whole airplane slope of the lift curve
+
+Cla - airfoil slope of the lift curve (=2pi theoretically)
+
+Clb - Rolling moment with sideslip angle (dihedral effect)
+
+Cm - Airfoil pitching-moment coefficient
+
+Cm - Wing or whole airplane pitching-moment coefficient
+
+Cma - Pitching-moment derivative with angle of attack
+
+Cn - Yawing-moment coefficient
+
+Cnb - Yawing-moment coefficient derivative with sideslip angle
+
+C_ram - Ram coefficient (adjusts thrust for inlet pressure recovery)
+
+C_VT - Vertical tail volume coefficient
+
+
+
 
