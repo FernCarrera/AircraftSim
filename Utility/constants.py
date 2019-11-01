@@ -10,4 +10,5 @@ SL_DENSITY = 1.225          # sea level density [kg/m**3]
 SL_PRESSURE = 101325        # sea level pressure N/m**2
 GRAVITY = 9.80665           # m/s**2
 GAMMA_AIR = 1.4
+STD_GRAVITATIONAL_PARAM = 3.986004418e14
 
