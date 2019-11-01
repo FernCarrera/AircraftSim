@@ -11,3 +11,15 @@ def hor2body(Local_H,theta,phi,psi):
     Local_body = Lbh.dot(Local_H)
 
     return Local_body
+
+def body2hor(body_coords,theta,phi,psi):
+
+    Lhb = np.array([
+                    [cos(theta) * cos(psi),sin(phi) * sin(theta) * cos(psi) - cos(phi) * sin(psi),cos(phi) * sin(theta) * cos(psi) + sin(phi) * sin(psi)],
+                    [cos(theta) * sin(psi),sin(phi) * sin(theta) * sin(psi) + cos(phi) * cos(psi),cos(phi) * sin(theta) * sin(psi) - sin(phi) * cos(psi)],
+                    [- sin(theta),sin(phi) * cos(theta),cos(phi) * cos(theta)]
+                    ])
+
+    hor_coords = Lhb.dot(body_coords)
+
+    return hor_coords
