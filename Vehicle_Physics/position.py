@@ -78,37 +78,37 @@ class Position():
     Update position via earth ccoordinates
     
     """
-    class EarthPosition(Position):
+class EarthPosition(Position):
 
-        def __init__(self,x,y,height,lat=0,lon=0):
-            earth = np.array([x,y,-height])
-            geodetic = np.array([lat,lon,height])
-            geocentric = np.zeros()
-            super().__init__(geodetic,geocentric,earth)
+    def __init__(self,x,y,height,lat=0,lon=0):
+        earth = np.array([x,y,-height])
+        geodetic = np.array([lat,lon,height])
+        geocentric = np.zeros()
+        super().__init__(geodetic,geocentric,earth)
 
-        # updates vehicle position
-        def update(self,value):
-            delta_x,delta_y,_ = value - self.earth # dont need third value
-            d_lat = delta_x/EARTH_RADIUS
-            d_lon = delta_y/EARTH_RADIUS
-            self._geodetic = np.array([self.lat + d_lat,self.lon + d_lon],-value[2])
-            self.earth[:] = value
+    # updates vehicle position
+    def update(self,value):
+        delta_x,delta_y,_ = value - self.earth # dont need third value
+        d_lat = delta_x/EARTH_RADIUS
+        d_lon = delta_y/EARTH_RADIUS
+        self._geodetic = np.array([self.lat + d_lat,self.lon + d_lon],-value[2])
+        self.earth[:] = value
 
-    """
-    Update position via geodetic ccoordinates
-    """
-    class GeodeticPosition(Position):
+"""
+Update position via geodetic ccoordinates
+"""
+class GeodeticPosition(Position):
 
-        def __init__(self,lat,lon,height,x=0,y=0):
-            earth = np.array([x,y,-height])
-            geodetic = np.array([lat,lon,height])
-            geocentric = np.zeros(3)
-            super().__init__(geodetic,geocentric,earth)
+    def __init__(self,lat,lon,height,x=0,y=0):
+        earth = np.array([x,y,-height])
+        geodetic = np.array([lat,lon,height])
+        geocentric = np.zeros(3)
+        super().__init__(geodetic,geocentric,earth)
 
-        def update(self,value):
-            delta_lat,delta_lon,_ = value - self.geodetic
-            dx_earth = EARTH_RADIUS*delta_lat
-            dy_earth = EARTH_RADIUS*delta_lon
-            self._earth[:] = np.array([self.x_earth+dx_earth,self.y_earth+dy_earth,-value[2]])
-            self._geocentric = np.zeros(3)
-            self._geodetic[:] = value
+    def update(self,value):
+        delta_lat,delta_lon,_ = value - self.geodetic
+        dx_earth = EARTH_RADIUS*delta_lat
+        dy_earth = EARTH_RADIUS*delta_lon
+        self._earth[:] = np.array([self.x_earth+dx_earth,self.y_earth+dy_earth,-value[2]])
+        self._geocentric = np.zeros(3)
+        self._geodetic[:] = value

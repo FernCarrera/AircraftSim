@@ -49,7 +49,7 @@ class AngularVelocity():
     def psi_dot(self):
         return self._ang_rates[2]    
     
-class BodyAngRates(AngularVelocity):
+class BodyAngVel(AngularVelocity):
 
     def _init_(self,p,q,r,attitude):
         super()._init_()
