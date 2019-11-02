@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from Utility.Transformations import hor2body
+from Utility.Transformations import L2B
 import numpy as np
 from Utility.constants import GRAVITY, STD_GRAVITATIONAL_PARAM
 """
@@ -38,7 +38,7 @@ class VerticalConstant(Gravity):
     
     def update(self,state):
         # converts from local horizon to local body
-        self._versor = hor2body(self._z_horizon,
+        self._versor = L2B(self._z_horizon,
                                 theta=state.attitude.theta,
                                 phi=state.attitude.phi,
                                 psi=state.attitude.psi

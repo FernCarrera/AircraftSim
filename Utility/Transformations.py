@@ -3,7 +3,17 @@ from numpy import sin,cos,arctan2
 from numpy import linalg as LA
 from constants import PI
 
-def hor2body(Local_H,theta,phi,psi):
+
+"""
+Local NED to body transformation matrix
+theta:pitch/elevation, phi:roll/bank, psi:heading/azimuth
+
+RETURNS: Local2body transformation matrix
+"""
+
+
+
+def L2B(Local_H,theta,phi,psi):
     Lbh = np.array([
                     [cos(theta) * cos(psi),cos(theta) * sin(psi),- sin(theta)],
                     [sin(phi) * sin(theta) * cos(psi) - cos(phi) * sin(psi), sin(phi) * sin(theta) * sin(psi) + cos(phi) * cos(psi), sin(phi) * cos(theta)],
@@ -14,7 +24,7 @@ def hor2body(Local_H,theta,phi,psi):
 
     return Local_body
 
-def body2hor(body_coords,theta,phi,psi):
+def B2L(body_coords,theta,phi,psi):
 
     Lhb = np.array([
                     [cos(theta) * cos(psi),sin(phi) * sin(theta) * cos(psi) - cos(phi) * sin(psi),cos(phi) * sin(theta) * cos(psi) + sin(phi) * sin(psi)],

@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from Utility.Transformations import body2hor, hor2body
+from Utility.Transformations import L2B, B2L
 import numpy as np
 
 class Velocity():
@@ -51,7 +51,7 @@ class BodyVelocity(Velocity):
 
     def update(self,value,attitude):
         self._v_body[:] = value
-        self._v_NED = body2hor(value,attitude.theta,attitude.phi,attitude.psi)
+        self._v_NED = B2L(value,attitude.theta,attitude.phi,attitude.psi)
 
 """
 Updating velocity via NED velocity update
@@ -64,5 +64,5 @@ class NEDVelocity(Velocity):
 
     def update(self,value,attitude):
         self._v_NED[:] = value
-        self._v_body = hor2body(value,attitude.theta,attitude.phi,attitude.psi)
+        self._v_body = L2B(value,attitude.theta,attitude.phi,attitude.psi)
 
