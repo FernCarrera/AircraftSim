@@ -1,5 +1,6 @@
 from abc import abstractmethod
 import numpy as np
+from Utility.anemometry import TAS2CAS,TAS2EAS,calc_alpha_beta_TAS 
 
 """
 generic base class for aircraft
@@ -86,15 +87,41 @@ class Aircraft():
     #privates
     #sets controls and control limits to the control surfaces
     def _set_controls(self,controls):
-        pass
+        for control_name, control_value in controls.items():
+            limits = self.control_limits[control_name]
+            if limits[0] <= control_value <= limits[1]:
+                self.controls[control_name] = control_value
+            else:
+                # TODO:  raise a warning & assign max deflection
+                msg = (
+                    f"Control {control_name} out of range ({control_value} "
+                    f"when min={limits[0]} and max={limits[1]})"
+                )
+                raise ValueError(msg)
 
     # calculates velocities and dyn pressure
-    def _calc_aerodynamics(self,state,enviroment):
-        pass
-        #self.Mach = self.TAS/enviroment.SOS
-        #self.q_inf = 0.5*enviroment.rho*self.TAS**2
+    def _calc_aerodynamics(self,state,environment):
+        aero_v = state.velocity.v_body - environment.body_wind
+        self.alpha,self.beta,self.TAS = calc_alpha_beta_TAS(u=aero_v[0],v=aero_v[1],w=aero_v[2])
+        
+        # Velocity and Aerodynamic pressue
+
+        self.CAS = TAS2CAS(self.TAS,environment.pressure,environment.rho)
+        self.EAS = TAS2EAS(self.TAS,environment.rho)
+        self.Mach = self.TAS/environment.sos
+        self.q_inf = 0.5*environment.rho*self.TAS**2
+
+    def _calc_aerodynamics_2(self, TAS, alpha, beta, environment):
+
+        self.alpha, self.beta, self.TAS = alpha, beta, TAS
+
+        # Setting velocities & dynamic pressure
+        self.CAS = TAS2CAS(self.TAS, environment.pressure, environment.rho)
+        self.EAS = TAS2EAS(self.TAS, environment.rho)
+        self.Mach = self.TAS / environment.sos
+        self.q_inf = 0.5 * environment.rho * self.TAS ** 2
 
     @abstractmethod
-    def calc_forces_and_moments(self,state,enviroment,controls):
+    def calc_forces_and_moments(self,state,environment,controls):
         self._set_controls(controls)
-        self._calc_aerodynamics(state,enviroment)
+        self._calc_aerodynamics(state,environment)

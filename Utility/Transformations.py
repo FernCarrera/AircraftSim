@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import sin,cos,arctan2
 from numpy import linalg as LA
-from constants import PI
+from Utility.constants import PI,EARTH_RADIUS
 
 
 """
@@ -95,3 +95,50 @@ def normquat(w,x,y,z):
     norm = LA.norm(w,x,y,z)
     q_norm = (w+x+y+z)/norm
     return q_norm
+
+
+def check_alpha_beta_range(alpha, beta):
+    """Check alpha, beta values are inside the defined range. This
+    comprobation can also detect if the value of the angle is in degrees in
+    some cases.
+    """
+
+    alpha_min, alpha_max = (-np.pi/2, np.pi/2)
+    beta_min, beta_max = (-np.pi, np.pi)
+
+    if not (alpha_min <= alpha <= alpha_max):
+        raise ValueError('Alpha value is not inside correct range')
+    elif not (beta_min <= beta <= beta_max):
+        raise ValueError('Beta value is not inside correct range')
+
+def wind2body(wind_coords,alpha,beta):
+
+    check_alpha_beta_range(alpha, beta)
+
+    # Transformation matrix from body to wind
+    Lbw = np.array([
+                    [cos(alpha) * cos(beta),- cos(alpha) * sin(beta),-sin(alpha)],
+                    [sin(beta),cos(beta),0],
+                    [sin(alpha) * cos(beta),-sin(alpha) * sin(beta),cos(alpha)]
+                    ])
+
+    body_coords = Lbw.dot(wind_coords)
+
+    return body_coords
+
+def geopotential2geometric(alt):
+    """[converts geopotential altitude to geometric ]
+    
+    Arguments:
+        alt {[float]} -- [geopotential altitude]
+    """
+
+    return EARTH_RADIUS*alt/(EARTH_RADIUS-alt)
+
+def geometric2geopotential(alt):
+    """[converts geometric to geopotential altitutde]
+    
+    Arguments:
+        alt {[float]} -- [geometric altitude]
+    """
+    return EARTH_RADIUS * alt / (EARTH_RADIUS + alt)

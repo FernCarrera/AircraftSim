@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from Utility.constants import R, SL_DENSITY, SL_PRESSURE, SL_TEMP, GRAVITY, GAMMA_AIR
-
+from Utility.Transformations import geometric2geopotential
 from numpy import exp,sqrt
 
 
@@ -10,14 +10,14 @@ class Atmosphere():
         self._geopotential_alt = None   # m
         self._pressure_alt = None       # m
         self._Temp = None               # K
-        self._pressure = None              # atm
+        self._pressure = None           # atm
         self._rho = None                # Density kg/m**3
         self._sos = None                 # Speed of sound m/s
 
     def update(self,state):
 
         # need to define function
-        #self._geopotential_alt = geometric2geopotential(state.position.height)
+        self._geopotential_alt = geometric2geopotential(state.position.height)
 
         T,p,rho,sos = self.getAtm(self._geopotential_alt)
         self._Temp = T
@@ -61,10 +61,10 @@ class ISA1976(Atmosphere):
         self._lapse = (-0.0065,0,0.001,0.0028,0,-0.0028,-0.002)
 
         self.alt = 0        # Current altitude, m
-        self._T = self._T_ref[0]
-        self._P = self._P_ref[0]
+        self._Temp = self._T_ref[0]
+        self._pressure = self._P_ref[0]
         self._rho = self.pressure/(self._R * self.temp)
-        self._a = sqrt(self._gamma*self._R*self.temp)
+        self._sos = sqrt(self._gamma*self._R*self.temp)
 
     
     def getAtm(self,alt):

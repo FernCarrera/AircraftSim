@@ -24,7 +24,7 @@ class Acceleration():
     def v_dot(self):
         return self._accel_body[1]
     @property
-    def q_dot(self):
+    def w_dot(self):
         return self._accel_body[2]
     """NED frame"""
     @property

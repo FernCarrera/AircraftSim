@@ -1,10 +1,10 @@
 
 """
-Defines the enviroment the vehicle is flying in
+Defines the environment the vehicle is flying in
 Atmosphere, gravity, and wind
 """
 
-class Enviroment():
+class Environment():
 
     def __init__(self,atmosphere,gravity,wind):
         self.atmosphere = atmosphere

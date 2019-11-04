@@ -7,9 +7,9 @@ angular velocity p,q,r [rad/s]
 euler angular rates theta_dot,phi_dot,psi_dot [rad/s]
 """
 
-class AngularVelocity():
+class AngularVelocity:
 
-    def _init_(self):
+    def __init__(self):
         self._ang_v_body = np.zeros(3)
         self._ang_rates = np.zeros(3)
 
@@ -51,8 +51,8 @@ class AngularVelocity():
     
 class BodyAngVel(AngularVelocity):
 
-    def _init_(self,p,q,r,attitude):
-        super()._init_()
+    def __init__(self,p,q,r,attitude):
+        super().__init__()
         self.update(np.array([p,q,r]),attitude)
 
     def update(self,value,attitude):
@@ -62,8 +62,8 @@ class BodyAngVel(AngularVelocity):
 
 class EulerAngRates(AngularVelocity):
 
-    def _init_(self,t_dot,ph_dot,ps_dot,attitude):
-        super()._init_()
+    def __init__(self,t_dot,ph_dot,ps_dot,attitude):
+        super().__init__()
         self.update(np.array([t_dot,ph_dot,ps_dot]),attitude)
 
     def update(self,value,attitude):

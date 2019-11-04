@@ -60,7 +60,14 @@ class Skyhawk(Aircraft):
                             'delta_rudder'  : 0.0}
 
         # need to research actual limits of control surfaces
-        #self.control_limits = 
+        # using arbitrary control limits for cessna
+        self.control_limits = {'delta_elevator': (np.deg2rad(-26),
+                                                  np.deg2rad(28)),  # rad
+                               'delta_aileron': (np.deg2rad(-15),
+                                                 np.deg2rad(20)),  # rad
+                               'delta_rudder': (np.deg2rad(-16),
+                                                np.deg2rad(16)),  # rad
+                               'delta_t': (0, 1)}  # non-dimensional
 
         """ Initial Coefficients"""
         # Aerodynamics
@@ -91,77 +98,77 @@ class Skyhawk(Aircraft):
         self.p = 0.0            # roll rate [rad/s]
         self.r = 0.0            # yaw rate [rad/s]
 
-        @property
-        def delta_elevator(self):
-            return self.controls['delta_elevator']
+    @property
+    def delta_elevator(self):
+        return self.controls['delta_elevator']
 
-        @property
-        def delta_aileron(self):
-            return self.controls['delta_aileron']
+    @property
+    def delta_aileron(self):
+        return self.controls['delta_aileron']
 
-        @property
-        def delta_rudder(self):
-            return self.controls['delta_rudder']
+    @property
+    def delta_rudder(self):
+        return self.controls['delta_rudder']
 
-        # solve coefficient longitudinal matrix
-        def _calc_long_coefficients(self):
+    # solve coefficient longitudinal matrix
+    def _calc_long_coefficients(self):
 
-            self._long_in[1] = self.alpha
-            self._long_in[2] = (self.q*self.c_mean)/(2*self.airspeed)
-            self._long_in[3] = (self.alpha_rate*self.c_mean)/(2*self.airspeed)
-            self._long_in[4] = self.controls['delta_elevator']
+        self._long_in[1] = self.alpha
+        self._long_in[2] = (self.q*self.c_mean)/(2*self.TAS)
+        self._long_in[3] = (self.alpha_rate*self.c_mean)/(2*self.TAS)
+        self._long_in[4] = self.controls['delta_elevator']
 
-            # @: infix operator for matrix multiplication
-            self.CL, self.CD, self.Cm = self._long_matrix @ self._long_in
+        # @: infix operator for matrix multiplication
+        self.CL, self.CD, self.Cm = self._long_matrix @ self._long_in
 
-        # solve coefficient latitude matrix
-        def _calc_lat_coefficients(self):
+    # solve coefficient latitude matrix
+    def _calc_lat_coefficients(self):
 
-            self._lat_in[0] = self.beta
-            self._lat_in[1] = (self.p*self.span)/(2*self.airspeed)
-            self._lat_in[2] = (self.r*self.span)/(2*self.airspeed)
-            self._lat_in[3] = self.delta_aileron
-            self._lat_in[4] = self.delta_rudder
+        self._lat_in[0] = self.beta
+        self._lat_in[1] = (self.p*self.span)/(2*self.TAS)
+        self._lat_in[2] = (self.r*self.span)/(2*self.TAS)
+        self._lat_in[3] = self.delta_aileron
+        self._lat_in[4] = self.delta_rudder
 
-        # calculates forces and moments 
-        def _calc_aero_forces_moments(self):
-            q = self.q_inf
-            S = self.S
-            #c = self.chord
-            b = self.span
-            a = self.alpha
-            self._calc_lat_coefficients()
-            self._calc_long_coefficients()
+    # calculates forces and moments 
+    def _calc_aero_forces_moments(self):
+        q = self.q_inf
+        S = self.S
+        #c = self.chord
+        b = self.span
+        a = self.alpha
+        self._calc_lat_coefficients()
+        self._calc_long_coefficients()
 
-            L = q*S*b*self.CL
-            M = q*S*self.c_mean*self.Cm
-            N = q*S*b*self.Cn
-            Fx = q*S*(-self.CD*np.cos(a) + self.CL*np.sin(a))
-            Fy = q*S*self.CY
-            Fz = q*S*(-self.CD*np.sin(a) - self.CL*np.cos(a))
+        L = q*S*b*self.CL
+        M = q*S*self.c_mean*self.Cm
+        N = q*S*b*self.Cn
+        Fx = q*S*(-self.CD*np.cos(a) + self.CL*np.sin(a))
+        Fy = q*S*self.CY
+        Fz = q*S*(-self.CD*np.sin(a) - self.CL*np.cos(a))
 
-            return L,M,N,Fx,Fy,Fz
+        return L,M,N,Fx,Fy,Fz
 
-        def _calc_thrust(self):
-            q = self.q_inf
-            S = self.S
-            a = self.alpha_rate
-            #self.Ct = 
-            thrust = q*S*(self.CD*np.cos(a) - self.CL*np.sin(a)) + self.W*np.sin(a)
-            Ft = np.array([thrust,0,0])
-            return Ft
+    def _calc_thrust(self):
+        q = self.q_inf
+        S = self.S
+        a = self.alpha_rate
+        #self.Ct = 
+        thrust = q*S*(self.CD*np.cos(a) - self.CL*np.sin(a)) + self.W*np.sin(a)
+        Ft = np.array([thrust,0,0])
+        return Ft
 
 
-        # abstract class from aircraft base class
-        def calc_forces_and_moments(self,state,enviroment,controls):
-            super().calc_forces_and_moments()
-            L,M,N,Fx,Fy,Fz = self._calc_aero_forces_moments()
-            Ft = self._calc_thrust()
-            #Fg = enviroment.gravity_vector*self.mass
-            Fg = self.W
-            Fa = np.array([-Fx,Fy,-Fz])
+    # abstract class from aircraft base class
+    def calc_forces_and_moments(self,state,environment,controls):
+        super().calc_forces_and_moments(state,environment,controls)
+        L,M,N,Fx,Fy,Fz = self._calc_aero_forces_moments()
+        Ft = self._calc_thrust()
+        #Fg = environment.gravity_vector*self.mass
+        Fg = self.W
+        Fa = np.array([-Fx,Fy,-Fz])
 
-            self.forces = Ft + Fg + Fa      # N
-            self.moments = np.array([L,M,N])
+        self.forces = Ft + Fg + Fa      # N
+        self.moments = np.array([L,M,N])
 
-            return self.forces, self.moments
+        return self.forces, self.moments

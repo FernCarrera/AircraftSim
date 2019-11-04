@@ -83,7 +83,7 @@ class EarthPosition(Position):
     def __init__(self,x,y,height,lat=0,lon=0):
         earth = np.array([x,y,-height])
         geodetic = np.array([lat,lon,height])
-        geocentric = np.zeros()
+        geocentric = np.zeros(3)
         super().__init__(geodetic,geocentric,earth)
 
     # updates vehicle position

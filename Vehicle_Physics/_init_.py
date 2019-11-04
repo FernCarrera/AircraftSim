@@ -4,5 +4,6 @@ from Vehicle_Physics.position import EarthPosition, GeodeticPosition
 from Vehicle_Physics.attitude import EulerAttitude, QuaternionAttitude
 from Vehicle_Physics.velocity import BodyVelocity, NEDVelocity
 from Vehicle_Physics.acceleration import BodyAccel,NEDAccel
-from Vehicle_Physics.angular_acceleration import AngularAcceleration, EulerAngAccel
+from Vehicle_Physics.angular_acceleration import AngularAcceleration, EulerAngAccel,BodyAngAccel
 from Vehicle_Physics.angular_velocity import EulerAngRates,BodyAngVel
+from Vehicle_Physics.attitude import EulerAttitude

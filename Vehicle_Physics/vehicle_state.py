@@ -18,13 +18,16 @@ class VehicleState():
         #default checks
         if ang_V is None:
             ang_V = BodyAngVel(0,0,0,attitude)
-            self.ang_V = ang_V
+            
         if accel is None:
             accel = BodyAccel(0,0,0,attitude)
-            self.accel = accel
+            
         if ang_accel is None:
             ang_accel = BodyAngAccel(0,0,0,attitude)
-            self.ang_accel = ang_accel
+            
+        self.ang_V = ang_V
+        self.acceleration = accel
+        self.ang_accel = ang_accel
 
 
 
