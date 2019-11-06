@@ -44,18 +44,19 @@ def Euler2quat(euler):
     phi = euler[1]
     psi = euler[2]
 
-    c1 = cos(theta/2)
-    s1 = sin(theta/2)
-    c2 = cos(phi/2)
-    s2 = sin(phi/2)
-    c3 = cos(psi/2)
-    s3 = sin(psi/2)
-    c1c2 = c1*c2
-    s1s2 = s1*s2
-    q0 = c1c2*c3 - s1s2*s3
-    q1 = c1c2*s3 + s1s2*c3
-    q2 = s1*c2*c3 + c1*s2*s3
-    q3 = c1*s2*c3 - s1*c2*s3
+    ct = cos(theta/2)
+    cph = cos(phi/2)
+    cps = cos(psi/2)
+
+    st = sin(theta/2)
+    sph = sin(phi/2)
+    sps = sin(psi/2)
+
+    
+    q0 = cps*ct*cph + sps*st*sph
+    q1 = cps*ct*sph - sps*st*cph
+    q2 = cps*st*cph + sps*ct*sph
+    q3 = sps*ct*cph - cps*st*sph
 
     return np.array([q0,q1,q2,q3])
 """
