@@ -5,6 +5,7 @@ flat earth
 """
 from Utility.Integration import VehicleIntegration
 from Vehicle_Physics._init_ import EarthPosition,EulerAngAccel,EulerAngRates,EulerAttitude,BodyAccel,BodyAngVel,BodyVelocity,VehicleState,BodyAngAccel
+from simulator import Simulation 
 import numpy as np
 from numpy import sin,cos
 
@@ -19,10 +20,10 @@ class EulerFlatEarth(VehicleIntegration):
         updated_sim = self.update_simulation(t,self.tot_state)
         
         # is t used as an index?
-        mass = updated_sim.tot_state.aircraft.mass
-        inertia = updated_sim.tot_state.aircraft.inertia
-        forces = updated_sim.tot_state.aircraft.forces
-        moments = updated_sim.tot_state.aircraft.moments
+        mass = updated_sim.aircraft.mass
+        inertia = updated_sim.aircraft.inertia
+        forces = updated_sim.aircraft.forces
+        moments = updated_sim .aircraft.moments
 
         out = _system_equations(t,x,mass,inertia,forces,moments)
         return out

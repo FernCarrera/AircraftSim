@@ -57,16 +57,17 @@ class Skyhawk(Aircraft):
         # Control Surface definition [rad]
         self.controls = {   'delta_elevator': 0.0,
                             'delta_aileron' : 0.0,
-                            'delta_rudder'  : 0.0}
+                            'delta_rudder'  : 0.0,
+                            'delta_t'       : 0.0}
 
         # need to research actual limits of control surfaces
         # using arbitrary control limits for cessna
-        self.control_limits = {'delta_elevator': (np.deg2rad(-26),
-                                                  np.deg2rad(28)),  # rad
-                               'delta_aileron': (np.deg2rad(-15),
-                                                 np.deg2rad(20)),  # rad
-                               'delta_rudder': (np.deg2rad(-16),
-                                                np.deg2rad(16)),  # rad
+        self.control_limits = {'delta_elevator': (np.deg2rad(-90),
+                                                  np.deg2rad(90)),  # rad
+                               'delta_aileron': (np.deg2rad(-90),
+                                                 np.deg2rad(90)),  # rad
+                               'delta_rudder': (np.deg2rad(-90),
+                                                np.deg2rad(90)),  # rad
                                'delta_t': (0, 1)}  # non-dimensional
 
         """ Initial Coefficients"""
@@ -109,6 +110,10 @@ class Skyhawk(Aircraft):
     @property
     def delta_rudder(self):
         return self.controls['delta_rudder']
+
+    @property
+    def delta_t(self):
+        return self.controls['delta_t']
 
     # solve coefficient longitudinal matrix
     def _calc_long_coefficients(self):

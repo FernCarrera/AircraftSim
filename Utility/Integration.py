@@ -111,6 +111,7 @@ class VehicleIntegration(Integration):
         super().__init__(time0,state0,method=method,options=options)
         self.update_simulation = None
 
+    
     @abstractmethod
     def _adapt_tot_state(self,tot_state):
         raise NotImplementedError

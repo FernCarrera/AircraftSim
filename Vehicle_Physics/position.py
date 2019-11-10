@@ -91,7 +91,7 @@ class EarthPosition(Position):
         delta_x,delta_y,_ = value - self.earth # dont need third value
         d_lat = delta_x/EARTH_RADIUS
         d_lon = delta_y/EARTH_RADIUS
-        self._geodetic = np.array([self.lat + d_lat,self.lon + d_lon],-value[2])
+        self._geodetic = np.array([self.lat + d_lat,self.lon + d_lon,-value[2]])
         self.earth[:] = value
 
 """

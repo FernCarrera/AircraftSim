@@ -5,6 +5,8 @@ from Environment.wind import NoWind
 from Environment.gravity import VerticalConstant
 from Vehicle_Physics.position import EarthPosition
 from Utility.trim_solver import steady_state_trim
+from Utility.Signal_Generator import Constant
+from simulator import Simulation
 
 
 
@@ -35,4 +37,7 @@ controls_init = {'delta_elevator': 0, 'delta_aileron': 0, 'delta_rudder': 0, 'de
 trimmed_state,trimmed_controls = steady_state_trim(aircraft,environment,pos,psi,TAS,controls_init)
 print(f"Trimmed State:{trimmed_state}")
 #print(f"Trimmed Controls: {trimmed_controls}")
-
+environment.update(trimmed_state)
+forces,moments = aircraft.calc_forces_and_moments(trimmed_state,environment,controls_init)
+print(forces)
+#print(moments)

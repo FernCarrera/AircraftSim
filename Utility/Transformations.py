@@ -127,19 +127,19 @@ def wind2body(wind_coords,alpha,beta):
 
     return body_coords
 
-def geopotential2geometric(alt):
-    """[converts geopotential altitude to geometric ]
+def geopotential2geometric(height):
+    """[converts geopotential heightitude to geometric ]
     
     Arguments:
-        alt {[float]} -- [geopotential altitude]
+        height {[float]} -- [geopotential heightitude]
     """
 
-    return EARTH_RADIUS*alt/(EARTH_RADIUS-alt)
+    return EARTH_RADIUS*height/(EARTH_RADIUS-height)
 
-def geometric2geopotential(alt):
-    """[converts geometric to geopotential altitutde]
+def geometric2geopotential(height):
+    """[converts geometric to geopotential heightitutde]
     
     Arguments:
-        alt {[float]} -- [geometric altitude]
+        height {[float]} -- [geometric heightitude]
     """
-    return EARTH_RADIUS * alt / (EARTH_RADIUS + alt)
+    return EARTH_RADIUS * height / (EARTH_RADIUS + height)

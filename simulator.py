@@ -15,10 +15,10 @@ class Simulation:
 
         'time': 'system.time',
         # environment
-        'temperature': 'environment.T',
-        'pressure': 'environment.p',
+        'temperature': 'environment.temp',
+        'pressure': 'environment.pressure',
         'rho': 'environment.rho',
-        'a': 'environment.a',
+        'a': 'environment.sos',
         # aircraft
         'Fx': 'aircraft.Fx',
         'Fy': 'aircraft.Fy',
@@ -40,27 +40,27 @@ class Simulation:
         'elevator': 'aircraft.delta_elevator',
         'thrust': 'aircraft.delta_t',
         # system
-        'x_earth': 'system.full_state.position.x_earth',
-        'y_earth': 'system.full_state.position.y_earth',
-        'z_earth': 'system.full_state.position.z_earth',
+        'x_earth': 'system.tot_state.position.x_earth',
+        'y_earth': 'system.tot_state.position.y_earth',
+        'z_earth': 'system.tot_state.position.z_earth',
 
-        'height': 'system.full_state.position.height',
+        'height': 'system.tot_state.position.height',
 
-        'psi': 'system.full_state.attitude.psi',
-        'theta': 'system.full_state.attitude.theta',
-        'phi': 'system.full_state.attitude.phi',
+        'psi': 'system.tot_state.attitude.psi',
+        'theta': 'system.tot_state.attitude.theta',
+        'phi': 'system.tot_state.attitude.phi',
 
-        'u': 'system.full_state.velocity.u',
-        'v': 'system.full_state.velocity.v',
-        'w': 'system.full_state.velocity.w',
+        'u': 'system.tot_state.velocity.u',
+        'v': 'system.tot_state.velocity.v',
+        'w': 'system.tot_state.velocity.w',
 
-        'v_north': 'system.full_state.velocity.v_north',
-        'v_east': 'system.full_state.velocity.v_east',
-        'v_down': 'system.full_state.velocity.v_down',
+        'v_north': 'system.tot_state.velocity.v_north',
+        'v_east': 'system.tot_state.velocity.v_east',
+        'v_down': 'system.tot_state.velocity.v_down',
 
-        'p': 'system.full_state.angular_vel.p',
-        'q': 'system.full_state.angular_vel.q',
-        'r': 'system.full_state.angular_vel.r'
+        'p': 'system.tot_state.ang_V.p',
+        'q': 'system.tot_state.ang_V.q',
+        'r': 'system.tot_state.ang_V.r'
 
     }
 
