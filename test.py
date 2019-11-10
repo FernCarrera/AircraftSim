@@ -24,7 +24,7 @@ wind = NoWind()
 
 environment = Environment(atmosphere, gravity, wind)
 
-pos = EarthPosition(x=0, y=0, height=1000)
+pos = EarthPosition(x=0, y=0, height=5000)
 psi = 0.5  # rad
 TAS = 45  # m/s
 controls0 = {'delta_elevator': 0, 'delta_aileron': 0, 'delta_rudder': 0, 'delta_t': 0.5}
@@ -59,7 +59,7 @@ kwargs = {'subplots': True,
           'sharex': True,
           'figsize': (12, 100)}
 
-ax = results_005.plot(marker='.', color='r', **kwargs)
-ax = results_03.plot(ax=ax, marker='x', color='k', ls='', **kwargs)
-
-plt.show()
+#ax = results_005.plot(marker='.', color='r', **kwargs)
+#ax = resu  lts_03.plot(ax=ax, marker='x', color='k', ls='', **kwargs)
+results_005.to_excel("output.xlsx")
+#plt.show()

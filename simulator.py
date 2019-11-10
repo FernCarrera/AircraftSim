@@ -12,7 +12,7 @@ applies progress bar
 class Simulation:
 
     _variable_dictionary = {
-
+        
         'time': 'system.time',
         # environment
         'temperature': 'environment.temp',
@@ -20,6 +20,7 @@ class Simulation:
         'rho': 'environment.rho',
         'a': 'environment.sos',
         # aircraft
+        
         'Fx': 'aircraft.Fx',
         'Fy': 'aircraft.Fy',
         'Fz': 'aircraft.Fz',
@@ -39,7 +40,7 @@ class Simulation:
         'aileron': 'aircraft.delta_aileron',
         'elevator': 'aircraft.delta_elevator',
         'thrust': 'aircraft.delta_t',
-        # system
+        #system
         'x_earth': 'system.tot_state.position.x_earth',
         'y_earth': 'system.tot_state.position.y_earth',
         'z_earth': 'system.tot_state.position.z_earth',
@@ -122,6 +123,9 @@ class Simulation:
         # Saving the results according to the variable dictionary
         for var_name,value_pointer in self._save_vars.items():
             self.results[var_name].append((operator.attrgetter(value_pointer)(self)))
+        #self.results['Mach'].append((operator.attrgetter('aircraft.Mach')(self)))
+
+
 
     def _get_current_controls(self,time):
         c = {c_name: c_fun(time) for c_name,c_fun in self.controls.items()}

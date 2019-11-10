@@ -62,12 +62,12 @@ class Skyhawk(Aircraft):
 
         # need to research actual limits of control surfaces
         # using arbitrary control limits for cessna
-        self.control_limits = {'delta_elevator': (np.deg2rad(-90),
-                                                  np.deg2rad(90)),  # rad
-                               'delta_aileron': (np.deg2rad(-90),
-                                                 np.deg2rad(90)),  # rad
-                               'delta_rudder': (np.deg2rad(-90),
-                                                np.deg2rad(90)),  # rad
+        self.control_limits = {'delta_elevator': (np.deg2rad(-99),
+                                                  np.deg2rad(99)),  # rad
+                               'delta_aileron': (np.deg2rad(-99),
+                                                 np.deg2rad(99)),  # rad
+                               'delta_rudder': (np.deg2rad(-99),
+                                                np.deg2rad(99)),  # rad
                                'delta_t': (0, 1)}  # non-dimensional
 
         """ Initial Coefficients"""
@@ -157,10 +157,10 @@ class Skyhawk(Aircraft):
     def _calc_thrust(self):
         q = self.q_inf
         S = self.S
-        a = self.alpha_rate
+        a = self.alpha
         #self.Ct = 
         thrust = q*S*(self.CD*np.cos(a) - self.CL*np.sin(a)) + self.W*np.sin(a)
-        Ft = np.array([thrust,0,0])
+        Ft = np.array([0.001*thrust,0,0])
         return Ft
 
 
@@ -169,8 +169,7 @@ class Skyhawk(Aircraft):
         super().calc_forces_and_moments(state,environment,controls)
         L,M,N,Fx,Fy,Fz = self._calc_aero_forces_moments()
         Ft = self._calc_thrust()
-        #Fg = environment.gravity_vector*self.mass
-        Fg = self.W
+        Fg = environment.gravity_vector*self.mass
         Fa = np.array([-Fx,Fy,-Fz])
 
         self.forces = Ft + Fg + Fa      # N
