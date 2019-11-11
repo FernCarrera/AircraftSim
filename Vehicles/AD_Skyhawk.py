@@ -145,12 +145,12 @@ class Skyhawk(Aircraft):
         self._calc_lat_coefficients()
         self._calc_long_coefficients()
 
-        L = 0.001*q*S*b*self.CL
-        M = 0.001*q*S*self.c_mean*self.Cm
-        N = 0.001*q*S*b*self.Cn
-        Fx = 0.001*q*S*(-self.CD*np.cos(a) + self.CL*np.sin(a))
-        Fy = 0.001*q*S*self.CY
-        Fz = 0.001*q*S*(-self.CD*np.sin(a) - self.CL*np.cos(a))
+        L = q*S*b*self.CL
+        M = q*S*self.c_mean*self.Cm
+        N = q*S*b*self.Cn
+        Fx = q*S*(-self.CD*np.cos(a) + self.CL*np.sin(a))
+        Fy = q*S*self.CY
+        Fz = q*S*(-self.CD*np.sin(a) - self.CL*np.cos(a))
 
         return L,M,N,Fx,Fy,Fz
 
@@ -173,10 +173,10 @@ class Skyhawk(Aircraft):
         super().calc_forces_and_moments(state,environment,controls)
         L,M,N,Fx,Fy,Fz = self._calc_aero_forces_moments()
         Ft = self._calc_thrust(state)
-        Fg = environment.gravity_vector*self.mass
-        Fa = np.array([-Fx,Fy,-Fz])
+        Fg = environment.gravity_vector*self.mass/1000
+        Fa = np.array([-Fx/1000,Fy/1000,-Fz/1000])
 
         self.forces = Ft + Fg + Fa      # N
-        self.moments = np.array([L,M,N])
+        self.moments = np.array([L/1000,M/1000,N/1000])
 
         return self.forces, self.moments

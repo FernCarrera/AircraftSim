@@ -29,10 +29,10 @@ gravity = VerticalConstant()
 wind = NoWind()
 environment = Environment(atmosphere,gravity,wind)
 
-pos = EarthPosition(x=0,y=0,height=1000)
-psi = 0.5               #rad
-TAS = 45                #true airspeed m/s
-controls_init = {'delta_elevator': 0, 'delta_aileron': 0, 'delta_rudder': 0, 'delta_t': 0.5}
+pos = EarthPosition(x=0,y=0,height=10000)
+psi = 0.0               #rad
+TAS = 600                #true airspeed m/s
+controls_init = {'delta_elevator': 0, 'delta_aileron': 0, 'delta_rudder': 0, 'delta_t': 0.0}
 
 trimmed_state,trimmed_controls = steady_state_trim(aircraft,environment,pos,psi,TAS,controls_init)
 print(f"Trimmed State:{trimmed_state}")
