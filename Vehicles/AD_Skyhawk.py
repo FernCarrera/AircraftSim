@@ -58,17 +58,17 @@ class Skyhawk(Aircraft):
         self.controls = {   'delta_elevator': 0.0,
                             'delta_aileron' : 0.0,
                             'delta_rudder'  : 0.0,
-                            'delta_t'       : 0.0}
+                            'delta_t'       : 0.0}  # change in thrust
 
         # need to research actual limits of control surfaces
         # using arbitrary control limits for cessna
-        self.control_limits = {'delta_elevator': (np.deg2rad(-99),
-                                                  np.deg2rad(99)),  # rad
-                               'delta_aileron': (np.deg2rad(-99),
-                                                 np.deg2rad(99)),  # rad
-                               'delta_rudder': (np.deg2rad(-99),
-                                                np.deg2rad(99)),  # rad
-                               'delta_t': (0, 1)}  # non-dimensional
+        self.control_limits = {'delta_elevator': (np.deg2rad(-60),
+                                                  np.deg2rad(60)),  # rad
+                               'delta_aileron': (np.deg2rad(-60),
+                                                 np.deg2rad(60)),  # rad
+                               'delta_rudder': (np.deg2rad(-60),
+                                                np.deg2rad(60)),  # rad
+                               'delta_t': (0, 1)}  # non-dimensional, change in thrust
 
         """ Initial Coefficients"""
         # Aerodynamics
@@ -159,8 +159,8 @@ class Skyhawk(Aircraft):
         S = self.S
         a = self.alpha
         #self.Ct = 
-        thrust = q*S*(self.CD*np.cos(a) - self.CL*np.sin(a)) + self.W*np.sin(a)
-        Ft = np.array([0.001*thrust,0,0])
+        thrust = 0.001*(q*S*(self.CD*np.cos(a) - self.CL*np.sin(a)) + self.W*np.sin(a)) # convert to kN
+        Ft = np.array([thrust,0,0])
         return Ft
 
 

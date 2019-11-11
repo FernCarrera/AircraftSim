@@ -52,8 +52,8 @@ controls = controls = {
 sim = Simulation(aircraft, system, environment, controls, dt=0.3)
 results_03 = sim.propagate(25)
 
-sim = Simulation(aircraft, system, environment, controls, dt=0.05)
-results_005 = sim.propagate(25)
+#sim = Simulation(aircraft, system, environment, controls, dt=0.05)
+#results_005 = sim.propagate(25)
 
 kwargs = {'subplots': True,
           'sharex': True,
@@ -61,5 +61,5 @@ kwargs = {'subplots': True,
 
 #ax = results_005.plot(marker='.', color='r', **kwargs)
 #ax = resu  lts_03.plot(ax=ax, marker='x', color='k', ls='', **kwargs)
-results_005.to_excel("output.xlsx")
+results_03.to_excel("output.xlsx")
 #plt.show()
