@@ -145,12 +145,12 @@ class Skyhawk(Aircraft):
         self._calc_lat_coefficients()
         self._calc_long_coefficients()
 
-        L = q*S*b*self.CL
-        M = q*S*self.c_mean*self.Cm
-        N = q*S*b*self.Cn
-        Fx = q*S*(-self.CD*np.cos(a) + self.CL*np.sin(a))
-        Fy = q*S*self.CY
-        Fz = q*S*(-self.CD*np.sin(a) - self.CL*np.cos(a))
+        L = 0.001*q*S*b*self.CL
+        M = 0.001*q*S*self.c_mean*self.Cm
+        N = 0.001*q*S*b*self.Cn
+        Fx = 0.001*q*S*(-self.CD*np.cos(a) + self.CL*np.sin(a))
+        Fy = 0.001*q*S*self.CY
+        Fz = 0.001*q*S*(-self.CD*np.sin(a) - self.CL*np.cos(a))
 
         return L,M,N,Fx,Fy,Fz
 

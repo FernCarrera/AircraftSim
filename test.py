@@ -24,9 +24,9 @@ wind = NoWind()
 
 environment = Environment(atmosphere, gravity, wind)
 
-pos = EarthPosition(x=0, y=0, height=5000)
+pos = EarthPosition(x=0, y=0, height=10000)
 psi = 0.5  # rad
-TAS = 45  # m/s
+TAS = 600  # m/s, about mach 2 @ 10,000
 controls0 = {'delta_elevator': 0, 'delta_aileron': 0, 'delta_rudder': 0, 'delta_t': 0.5}
 
 trimmed_state, trimmed_controls = steady_state_trim(
