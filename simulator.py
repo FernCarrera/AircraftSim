@@ -39,7 +39,7 @@ class Simulation:
         'rudder': 'aircraft.delta_rudder',
         'aileron': 'aircraft.delta_aileron',
         'elevator': 'aircraft.delta_elevator',
-        'thrust': 'aircraft.delta_t',
+        #'thrust': 'aircraft.delta_t',
         #system
         'x_earth': 'system.tot_state.position.x_earth',
         'y_earth': 'system.tot_state.position.y_earth',

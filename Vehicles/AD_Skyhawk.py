@@ -57,8 +57,8 @@ class Skyhawk(Aircraft):
         # Control Surface definition [rad]
         self.controls = {   'delta_elevator': 0.0,
                             'delta_aileron' : 0.0,
-                            'delta_rudder'  : 0.0,
-                            'delta_t'       : 0.0}  # change in thrust
+                            'delta_rudder'  : 0.0}
+                           # 'delta_t'       : 0.0}  # change in thrust
 
         # need to research actual limits of control surfaces
         # using arbitrary control limits for cessna
@@ -154,13 +154,17 @@ class Skyhawk(Aircraft):
 
         return L,M,N,Fx,Fy,Fz
 
-    def _calc_thrust(self):
-        q = self.q_inf
-        S = self.S
-        a = self.alpha
+    def _calc_thrust(self,state):
+        alt = state.position.height/1000
+        M = self.Mach
+        #q = self.q_inf
+        #S = self.S
+        #a = self.alpha
         #self.Ct = 
-        thrust = 0.001*(q*S*(self.CD*np.cos(a) - self.CL*np.sin(a)) + self.W*np.sin(a)) # convert to kN
-        Ft = np.array([thrust,0,0])
+        #thrust = 0.001*(q*S*(self.CD*np.cos(a) - self.CL*np.sin(a)) + self.W*np.sin(a)) # convert to kN
+        Mil_thrust = 78.8 + 13.3*M - 6.3*alt + 0.13*alt**2 + 7.3*M**2 -alt*M
+        
+        Ft = np.array([Mil_thrust,0,0])
         return Ft
 
 
@@ -168,7 +172,7 @@ class Skyhawk(Aircraft):
     def calc_forces_and_moments(self,state,environment,controls):
         super().calc_forces_and_moments(state,environment,controls)
         L,M,N,Fx,Fy,Fz = self._calc_aero_forces_moments()
-        Ft = self._calc_thrust()
+        Ft = self._calc_thrust(state)
         Fg = environment.gravity_vector*self.mass
         Fa = np.array([-Fx,Fy,-Fz])
 
